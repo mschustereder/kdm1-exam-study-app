@@ -1,0 +1,45 @@
+{
+  "flagged": [
+    {
+      "file": "full_summaries/02_Dataset-Collection.md",
+      "lines": 201,
+      "target": 50,
+      "ratio": 4.02,
+      "issue": "lines (201 vs target 50, ratio 4.02)",
+      "action": "condense"
+    },
+    {
+      "file": "full_summaries/06_Feature_Engineering.md",
+      "lines": 587,
+      "target": 198,
+      "ratio": 2.97,
+      "issue": "lines (587 vs target 198, ratio 2.97)",
+      "action": "condense"
+    }
+  ],
+  "passed": [
+    "medium_summaries/01_Introduction.md",
+    "medium_summaries/02_Dataset-Collection.md",
+    "medium_summaries/03_Visual-Preprocessing.md",
+    "medium_summaries/04_Statistical-Data-Science.md",
+    "medium_summaries/05_Outliers_Missing-Values.md",
+    "medium_summaries/06_Feature_Engineering.md",
+    "medium_summaries/07_Dim_Reduction.md",
+    "medium_summaries/08_Clustering_Classification.md",
+    "medium_summaries/09_Pattern_Mining.md",
+    "medium_summaries/10_Evaluation.md",
+    "full_summaries/01_Introduction.md",
+    "full_summaries/03_Visual-Preprocessing.md",
+    "full_summaries/04_Statistical-Data-Science.md",
+    "full_summaries/05_Outliers_Missing-Values.md",
+    "full_summaries/07_Dim_Reduction.md",
+    "full_summaries/08_Clustering_Classification.md",
+    "full_summaries/09_Pattern_Mining.md",
+    "full_summaries/10_Evaluation.md"
+  ],
+  "summary": {
+    "total": 20,
+    "passed": 18,
+    "flagged": 2
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "01_Introduction": {
+    "pages": 42,
+    "size_kb": 1844,
+    "density": 43.9,
+    "target_lines": {
+      "medium": 39,
+      "full": 100
+    }
+  },
+  "02_Dataset-Collection": {
+    "pages": 21,
+    "size_kb": 2169,
+    "density": 103.3,
+    "target_lines": {
+      "medium": 19,
+      "full": 50
+    }
+  },
+  "03_Visual-Preprocessing": {
+    "pages": 38,
+    "size_kb": 2191,
+    "density": 57.7,
+    "target_lines": {
+      "medium": 35,
+      "full": 91
+    }
+  },
+  "04_Statistical-Data-Science": {
+    "pages": 72,
+    "size_kb": 2956,
+    "density": 41.1,
+    "target_lines": {
+      "medium": 66,
+      "full": 172
+    }
+  },
+  "05_Outliers_Missing-Values": {
+    "pages": 66,
+    "size_kb": 2973,
+    "density": 45.0,
+    "target_lines": {
+      "medium": 61,
+      "full": 158
+    }
+  },
+  "06_Feature_Engineering": {
+    "pages": 83,
+    "size_kb": 652,
+    "density": 7.9,
+    "target_lines": {
+      "medium": 76,
+      "full": 198
+    }
+  },
+  "07_Dim_Reduction": {
+    "pages": 38,
+    "size_kb": 1776,
+    "density": 46.7,
+    "target_lines": {
+      "medium": 35,
+      "full": 91
+    }
+  },
+  "08_Clustering_Classification": {
+    "pages": 71,
+    "size_kb": 997,
+    "density": 14.0,
+    "target_lines": {
+      "medium": 65,
+      "full": 170
+    }
+  },
+  "09_Pattern_Mining": {
+    "pages": 42,
+    "size_kb": 533,
+    "density": 12.7,
+    "target_lines": {
+      "medium": 39,
+      "full": 100
+    }
+  },
+  "10_Evaluation": {
+    "pages": 71,
+    "size_kb": 976,
+    "density": 13.7,
+    "target_lines": {
+      "medium": 65,
+      "full": 170
+    }
+  }
+}

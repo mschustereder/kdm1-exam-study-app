@@ -14,7 +14,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/topics-list':
-            files = sorted([f for f in os.listdir(TOPICS_DIR) if f.endswith('.json')])
+            files = sorted([f for f in os.listdir(TOPICS_DIR) if f.endswith('.json')],
+                           key=lambda f: int(f.replace('topic_', '').replace('.json', '')))
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')

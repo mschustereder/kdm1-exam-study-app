@@ -48,6 +48,14 @@ function escapeHtml(s) {
 
 function renderMarkdown(text) {
   let html = escapeHtml(text);
+
+  const codeBlocks = [];
+  html = html.replace(/```\n?([\s\S]*?)```/g, (_, code) => {
+    const idx = codeBlocks.length;
+    codeBlocks[idx] = code;
+    return `%%%CB_${idx}%%%`;
+  });
+
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
   html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
@@ -64,12 +72,19 @@ function renderMarkdown(text) {
   html = html.replace(/<\/li><\/p>/g, '</li>');
   html = html.replace(/<p><h3>/g, '<h3>');
   html = html.replace(/<\/h3><\/p>/g, '</h3>');
+
+  html = html.replace(/<p>%%%CB_(\d+)%%%<\/p>/g, (_, i) =>
+    `<pre><code>${codeBlocks[parseInt(i)].trim()}</code></pre>`);
+  html = html.replace(/%%%CB_(\d+)%%%/g, (_, i) =>
+    `<pre><code>${codeBlocks[parseInt(i)].trim()}</code></pre>`);
+
   return html;
 }
 
 function render() {
   const main = document.getElementById('main');
   const nav = document.getElementById('tab-bar');
+  const control = document.getElementById('control-bar');
 
   const shortNames = {
     1: '1  Introduction',
@@ -81,9 +96,9 @@ function render() {
     7: '7  Dim Reduction',
     8: '8  Clustering & Class.',
     9: '9  Pattern Mining',
-     10: '10 Evaluation',
+    10: '10 Evaluation',
     11: '11  Old Exam \'24'
-    };
+  };
 
   nav.innerHTML = topics.map(t =>
     `<button class="tab-btn${t.id === currentTopicId ? ' active' : ''}"
@@ -92,16 +107,15 @@ function render() {
 
   const topic = getTopic();
   if (!topic) {
+    control.innerHTML = '';
     main.innerHTML = '<p class="empty">No topic loaded.</p>';
     return;
   }
 
+  const depthLabels = { concise: 'Concise', medium: 'Medium', full: 'Full' };
+
   if (topic.type === 'exam') {
-    main.innerHTML = `
-      <div class="topic-header">
-        <span class="topic-icon">${escapeHtml(topic.icon)}</span>
-        <span class="topic-title">${escapeHtml(topic.title)}</span>
-      </div>
+    control.innerHTML = `
       <div class="answer-toggle-bar">
         <button class="answer-toggle-btn" disabled
           title="Answers not yet available">
@@ -110,6 +124,12 @@ function render() {
           </span>
           Show Answers
         </button>
+      </div>
+    `;
+    main.innerHTML = `
+      <div class="topic-header">
+        <span class="topic-icon">${escapeHtml(topic.icon)}</span>
+        <span class="topic-title">${escapeHtml(topic.title)}</span>
       </div>
       <div class="sections">
         ${topic.questions.map(q => `
@@ -126,9 +146,8 @@ function render() {
   }
 
   const allDepths = ['concise', 'medium', 'full'];
-  const depthLabels = { concise: 'Concise', medium: 'Medium', full: 'Full' };
 
-  const depthHtml = `
+  control.innerHTML = `
     <div class="depth-switcher">
       ${allDepths.map(d => {
         const isAvail = topic.depths[d] && topic.depths[d].available;
@@ -148,7 +167,6 @@ function render() {
         <span class="topic-icon">${escapeHtml(topic.icon)}</span>
         <span class="topic-title">${escapeHtml(topic.title)}</span>
       </div>
-      ${depthHtml}
       <p class="empty">Content for <strong>${depthLabels[currentDepth]}</strong> depth is not yet available.</p>
     `;
     return;
@@ -159,7 +177,6 @@ function render() {
       <span class="topic-icon">${escapeHtml(topic.icon)}</span>
       <span class="topic-title">${escapeHtml(topic.title)}</span>
     </div>
-    ${depthHtml}
     <div class="sections">
       ${depthObj.sections.map(s => `
         <div class="section-card">

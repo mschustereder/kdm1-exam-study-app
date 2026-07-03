@@ -29,12 +29,62 @@
       ]
     },
     "medium": {
-      "available": false,
-      "sections": []
+      "available": true,
+      "sections": [
+        {
+          "heading": "Definitions",
+          "content": "- **Data Collection Types:** (a) *Observational* — passively collected without interfering (sensors, logs, questionnaires); (b) *Interventional* — collected while actively making changes (drug trials); (c) *Biased* — sampling bias distorts representativeness; (d) *Domain Shift* — combining datasets collected under differing conditions violates comparability.\n- **I.I.D. Assumption:** Most tabular data methods assume rows are *Independent* (no systematic dependency) and *Identically Distributed* (drawn from the same distribution). Violations (e.g., time series, repeated athletes) break standard ML assumptions.\n- **Data Structure Levels:** *Structured* (schema known, e.g. databases), *Semi-structured* (mixed, e.g. JSON/spreadsheets), *Unstructured* (free text, images, logs).\n- **Study Types:** *Controlled experiments* (manipulate independent variables, random assignment, measure causal effect); *Quasi-experiments* (no random assignment, causal claims weaker); *Survey research* (cross-sectional snapshot, cohort/longitudinal, case-controlled)."
+        },
+        {
+          "heading": "Key Algorithms & Techniques",
+          "content": "- **Web Crawling:** A crawler starts from seed URLs, downloads pages, extracts links, and repeats (BFS using a queue or DFS using a stack). *Batch crawlers* take a snapshot; *incremental crawlers* revisit for freshness; *focused/topical crawlers* use classifiers to predict relevance before fetching.\n- **Wrapper Induction (Information Extraction):** Learns landmark tokens that delimit target fields in template-generated HTML pages. *Co-training* reduces manual labelling by learning forward and backward landmarks simultaneously; disagreement signals new training candidates.\n- **Focused Crawler Cues:** Relevance is predicted via (1) *lexical* similarity (cosine similarity between page text) and (2) *link topology* — cluster hypothesis and link-content conjecture (linked pages are lexically/semantically related).\n- **Surrogate Modelling:** A slow but precise simulation (e.g., finite element method) generates a dataset; a faster ML model is trained on it as an approximation."
+        },
+        {
+          "heading": "Important Formulas & Diagrams",
+          "content": "- **Data Processing Pipeline:** `Nature (Patterns) → Data Collection → Dataset → PreProcessing → Features → Data Mining → Patterns`. Information lost at collection can never be recovered later.\n- **Causal Inference Dependency:** Observational data alone cannot (generally) support causal claims — interventional data or special designs (regression discontinuity, difference-in-differences) are required.\n- **Harvest Rate & Search Length:** Metrics for crawler evaluation — *harvest rate* = percentage of good/relevant pages; *search length* = number of pages to crawl before finding a given fraction of relevant pages."
+        },
+        {
+          "heading": "Learning Objectives",
+          "content": "- Distinguish data collection types and understand how the collection process limits downstream inference (causal vs. correlational).\n- Recognise I.I.D. violations and their consequences for model validity.\n- Describe the web crawling pipeline, compare crawling strategies (BFS/DFS, batch/incremental, focused/topical), and evaluate crawlers via harvest rate / search length.\n- Explain wrapper induction and the role of landmarks, co-training, and active learning for web information extraction.\n- Design or critique study types (controlled experiment, quasi-experiment, survey) and apply questionnaire design guidelines (avoid leading questions, double-barrelled items, social desirability bias).\n- Motivate when and how to generate synthetic datasets (augmentation, surrogate modelling) and why documenting dataset provenance matters to avoid \"documentation debt.\""
+        }
+      ]
     },
     "full": {
-      "available": false,
-      "sections": []
+      "available": true,
+      "sections": [
+        {
+          "heading": "1. Introduction",
+          "content": "Data collection is foundational. **Data Processing Inequality:** information can only be lost, never gained through the pipeline — source data not collected is irretrievably lost. The generation process and collection method determine causal estimability (Bareinboim & Pearl, 2016).\n\n---"
+        },
+        {
+          "heading": "2. Dataset Collection Types (Data Generation)",
+          "content": "- **Observational:** Passive, no interference. Does **not** support causal inference.\n- **Interventional:** Active manipulation (A/B testing, drug trials). Enables causal inference.\n- **Biased:** Sampling bias, distribution shift (bias changing over time).\n- **Domain Shift:** Combining datasets from different conditions — distributions differ; naive joins invalid.\n\n---"
+        },
+        {
+          "heading": "3. Types of Data Sets",
+          "content": "### 3.1 Structure: 1) **Structured** — full schema. 2) **Semi-structured** — mixed (JSON). 3) **Unstructured** — no schema (text, images, logs).\n### 3.2 Tabular Data: Rows = instances, columns = features/target. **I.I.D. Assumption** (independent, identically distributed). Violated when same entity repeats (e.g., athlete injury prediction). CSV needs careful parsing.\n### 3.3 Time Series: Not I.I.D. — **autoregressive** (past predicts future). **Univariate** vs. **Multivariate**.\n### 3.4 Other: **Image** (spatial autocorrelation), **Graph** (nodes/edges, homophily), **Text**, **Spatial**.\n\n---"
+        },
+        {
+          "heading": "4. Existing Datasets",
+          "content": "**Internal:** SQL/Cypher/SPARQL queries. **External:** common for \"big data\"; check compatibility. **Repositories:** UCI ML Repository, UEA/UCR Time Series, Zenodo, Data (MDPI). **Public:** Awesome Public Datasets (GitHub), Kaggle, Open Governmental Data (data.europa.eu — 1.5M+ datasets).\n\n---"
+        },
+        {
+          "heading": "5. Web Crawling",
+          "content": "**Crawler:** HTTP client that systematically downloads pages (googlebot; frameworks: Scrapy, Heritrix). **Schema:** URL → download → analyse → extract links → **frontier** (queue) → repeat.\n**Types:** **Batch** (snapshot), **Incremental** (revisits), **Specialised** (focused/topical). **Challenges:** volume, dynamic pages, duplicate detection (URL normalisation), redirect loops, memory.\n**Structured info:** Semantic Web (RDF), **Microformats** (e.g., `class=\"geo\"` — 4.1B+ OSM nodes).\n**Strategies:** **BFS** (queue/FIFO), **DFS** (stack/LIFO), **Concurrent** (distributed), **Deep** (hidden web forms), **Topical** (find similar pages), **Focused** (classifier-based). Conjectures: **link-content** (lexical similarity decays with link distance), **link-cluster** (semantic relatedness decays). **Evaluation:** **Harvest rate** (% relevant), **Search length** (pages to target relevance).\n**Wrapper Generation** — extract structured data from HTML templates. Approaches: **Manual**, **Wrapper Induction** (supervised; landmarks + active learning/co-training), **Automatic** (unsupervised).\n**Ethics:** avoid DoS-like requests; respect **robots.txt**; check T&C and personal data.\n\n---"
+        },
+        {
+          "heading": "6. Types of Studies",
+          "content": "**Controlled Experiment:** Hypothesis-driven; manipulate IVs → measure DVs. Designs: **Between-subjects** (random groups), **Within-subjects** (all treatments; risk: learning effect), **Quasi-experiments** (no random assignment; RDD, DiD).\n**Survey Research:** Large-sample questionnaires. **Cross-sectional** (snapshot), **Case-controlled** (correlations), **Cohort** (longitudinal). 9 rules: avoid leading, social desirability, double-barrelled, long, negations, irrelevant, poor options, big/ambiguous words.\n\n---"
+        },
+        {
+          "heading": "7. Synthetic Datasets",
+          "content": "**Why:** ethical/legal unavailability, controlled testing, size impact. **Augmentation:** label-preserving variants (rotation, scaling) → improves robustness. **Surrogate Modelling:** expensive simulation → fast ML approximation (less precise, faster).\n**Documentation Debt** (Bender et al., 2021): undocumented large datasets perpetuate harm. Domain knowledge (constraints) should be formally documented (knowledge graphs).\n\n---"
+        },
+        {
+          "heading": "Key References",
+          "content": "1. Bareinboim & Pearl (2016) — Causal inference and data-fusion. *PNAS* 113(27).\n2. Bender et al. (2021) — Stochastic parrots. *FAccT*.\n3. Lovdal et al. (2021) — Injury prediction in runners. *Int. J. Sports Physiol. Perform.* 16(10).\n4. Singh & Bedathur (2023) — Embeddings for tabular data. *arXiv:2302.11777*."
+        }
+      ]
     }
   }
 }
