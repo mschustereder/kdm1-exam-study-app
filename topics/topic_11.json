@@ -1,0 +1,41 @@
+{
+  "id": 11,
+  "title": "Old Exam (2024, Group B)",
+  "icon": "📝",
+  "type": "exam",
+  "questions": [
+    {
+      "heading": "Question 1 — Dataset Collection",
+      "content": "The way data has been collected has a profound impact on succeeding processing steps. Here we assume tabular data (e.g., features as columns, instances as rows) and we want to use a dataset for classification, i.e., one of the features is the target feature which we want to learn to predict.\n\n**a)** Why is it important to test for dependencies between the features?\n\n**b)** What are the implications if there many features are highly correlated?\n\n**c)** What are the implications of the number of features? How does the number influence the ability to predict the target variable?"
+    },
+    {
+      "heading": "Question 2 — Correlation",
+      "content": "There are multiple different correlation measures.\n\n**a)** Please list a number of common correlation measures? (3–5 measures)\n\n**b)** Pick two correlation measures and list their main assumptions about the data and the dependencies in the data.\n\n**c)** Which correlation measures allow to detect causal relationships in the data?"
+    },
+    {
+      "heading": "Question 3 — Missing Values",
+      "content": "Missing data may have profound impact on the results of the data mining steps.\n\n**a)** What types of missing values exist and what are the implications?\n\n**b)** Why is it important to understand why some data is missing?\n\n**c)** What dependencies should be checked in order to inform the appropriate way to deal with missing values?\n\n**d)** In a dataset, a feature has missing values, but there is another feature with a visible dependency. What are the implications?"
+    },
+    {
+      "heading": "Question 4 — Anomalies",
+      "content": "Data that does not conform to the notion of normality may be present in a dataset.\n\n**a)** What role does domain knowledge play in anomaly detection?\n\n**b)** What approach do you choose, if anomalies are characterised by having the highest Euclidean distance from the origin in feature space?\n\n**c)** Please draw a 2D scatter plot of a dataset with anomalies/outliers (please indicate normal and anomaly behaviour), where you expect Local Outlier Factor (LOF) to work well."
+    },
+    {
+      "heading": "Question 5 — Entropy",
+      "content": "Entropy is a measure of uncertainty in a random variable.\n\n**a)** What is the mathematical definition of entropy?\n\n**b)** Let X = (A, B, C, D, E), with probabilities P(A) = 1/6, P(B) = 1/6, P(C) = 1/6, P(D) = 1/6, P(E) = 1/3. Compute the entropy of X.\n\n**c)** Give an example for probabilities that would result in the maximal entropy of X."
+    },
+    {
+      "heading": "Question 6 — Dimensionality Reduction",
+      "content": "If there are many features we typically perform dimensionality reduction.\n\n**a)** Why is it a good idea to reduce the number of features? Give at least three reasons.\n\n**b)** What are typical applications where we use dimensionality reduction? Give at least two applications.\n\n**c)** Explain the basic principle of Principal Component Analysis in a few sentences."
+    },
+    {
+      "heading": "Question 7 — Clustering",
+      "content": "Clustering is an unsupervised method for identifying groups of similar instances.\n\n**a)** Explain the basic objectives of clustering in a few sentences.\n\n**b)** Give at least three types of clustering.\n\n**c)** Explain hierarchical clustering. What hyperparameters do we need to set in this approach? What are advantages and disadvantages of hierarchical clustering?"
+    },
+    {
+      "heading": "Question 8 — Classification Evaluation",
+      "content": "Evaluation is an integral part of any data science project. We apply an e-mail spam classifier on a test dataset with 800 e-mails. The classification results are summarised in the following contingency table (with 1 representing spam class):\n\n```\n             Prediction\n               1     0\nReal class 1 | 70 | 40\n           0 | 30 | 660\n```\n\n**a)** Calculate the accuracy (A), recall (R), precision (P) and F1 measure for the classifier. Give results in fractions.\n\n**b)** Why do we need the F1 measure?\n\n**c)** What other classification evaluation measures exist?"
+    }
+  ],
+  "answersAvailable": false
+}

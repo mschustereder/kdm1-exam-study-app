@@ -1,0 +1,48 @@
+{
+  "id": 10,
+  "title": "Evaluation",
+  "icon": "✅",
+  "depths": {
+    "concise": {
+      "available": true,
+      "sections": [
+        {
+          "heading": "Core Definitions & Concepts",
+          "content": "- **Evaluation** is required to estimate how well a model will perform on unseen/real-world data; the goal is to understand generalisation performance and avoid spurious results.\n- **Key assumption:** the underlying generative process between training and unseen data does not change (i.i.d. assumption).\n- **Accuracy (A):** fraction of correct predictions — `A = (tp + tn) / (tp + fp + fn + tn)`.\n- **Accuracy paradox:** with skewed class distributions, a trivial majority-class classifier can achieve high accuracy while being useless (e.g., cancer detection).\n- **Contingency table** (confusion matrix): rows = predicted class, columns = real class; cells = tp, fp, fn, tn.\n- **Prevalence:** P = number of real positive instances (`tp + fn`); N = number of real negative instances (`tn + fp`)."
+        },
+        {
+          "heading": "Key Metrics & Techniques",
+          "content": "### Classifier Evaluation (Binary)\n\n- **Precision (Pr):** `tp / (tp + fp)` — how many predicted positives are truly positive.\n- **Recall (R) / Sensitivity / TPR:** `tp / (tp + fn)` — fraction of actual positives captured.\n- **Precision-Recall trade-off:** predicting more 1s increases recall but decreases precision; predicting fewer 1s increases precision but decreases recall.\n- **F1 Score:** harmonic mean of precision and recall — `F1 = 2 * (Pr * R) / (Pr + R)`; always lies between the two, biased toward the lower value.\n- **F-beta Score:** `Fβ = (1 + β²) * (Pr * R) / (β² * Pr + R)` — β weights recall importance (F2 emphasises recall for outlier detection).\n- **Matthews Correlation Coefficient (MCC):** `(tp*tn - fp*fn) / sqrt((tp+fp)(tp+fn)(tn+fp)(tn+fn))` — overall correlation between real and predicted classes; recommended as a default single metric.\n- **ROC Curve:** plots true positive rate vs. false positive rate for continuous classifier outputs (e.g., probabilities); originally from WWII signal detection.\n- **AUC (Area Under ROC Curve):** single scalar summarising the ROC curve, used for model selection.\n\n### Multi-Class Settings\n\n- **Micro F1:** global average (equals accuracy); biased toward majority classes.\n- **Macro F1:** unweighted average of per-class F1; ignores class sizes.\n- **Weighted F1:** per-class F1 weighted by class support; balances class size and performance.\n\n### Regression Evaluation\n\n- **RMSE (Root Mean Squared Error):** sensitive to outliers (larger deviations penalised more).\n- **MAE (Mean Absolute Error):** less sensitive to outliers, same units as target.\n- **R² (Coefficient of Determination):** fraction of variance in the target explained by the model.\n\n### Baselines\n\n- **Lower bound:** trivial/zero-utility threshold (e.g., constant classifier predicting majority class, random guessing).\n- **State of the art (SotA):** currently best known solution.\n- **Human performance:** average human vs. expert.\n- **Upper bound:** theoretical limit.\n- Baselines must reflect task hardness; comparing only against weak baselines is dishonest."
+        },
+        {
+          "heading": "Cluster Evaluation",
+          "content": "- **Human evaluation:** subjective, labour-intensive, hard to reproduce.\n- **Algorithmic evaluation:**\n  - **External validity:** compare clustering against a reference (e.g., ground-truth classes).\n    - **Purity:** `max_j(|Ci ∩ Cj*|) / |Ci|` — ratio of dominant class in a cluster.\n    - **Rand Index:** `(TP + TN) / (TP + TN + FP + FN)` based on pairwise instance comparisons.\n    - **V-Measure:** weighted harmonic mean of homogeneity (how much cluster tells us about class) and completeness (how much class tells us about cluster), derived from conditional entropy.\n  - **Internal validity:** analyse intrinsic cluster characteristics.\n    - **Silhouette Coefficient:** `s(i) = (b(i) - a(i)) / max{a(i), b(i)}` where a(i) = mean intra-cluster distance, b(i) = mean distance to nearest other cluster; values near +1 indicate well-separated clusters.\n    - **Edge correlation:** correlation between the similarity matrix and the co-occurrence (same-cluster) matrix.\n  - **Relative validity:** sensitivity analysis during clustering generation."
+        },
+        {
+          "heading": "Dataset Handling & Validation",
+          "content": "- **Overestimation risk:** training and testing on the same data yields overly optimistic results (the model may have memorised).\n- **Dataset splitting:** split randomly into training, optional validation (for hyper-parameter tuning), and test sets (used only once). Typical split: 80/20.\n- **Stratification:** preserve class proportions across splits — crucial for small or imbalanced datasets.\n- **k-Fold Cross-Validation:** split into k equally-sized folds; iterate using one fold for testing and rest for training; report mean and variance. k is typically 3–10.\n- **Leave-One-Out (LOO):** k = number of data points.\n- **Test data may only be used once** — reusing it for improvements effectively turns it into training data."
+        },
+        {
+          "heading": "A/B Testing",
+          "content": "- **Setup:** split users into groups A and B, each exposed to a different model/setting; record differences in user behaviour as implicit feedback.\n- **Theoretical basis:** statistical hypothesis test with null hypothesis (no difference); p-value indicates significance.\n- **Hill climbing for A/B testing:** continuously introduce new variations and repeat A/B tests to adapt to changing user behaviour."
+        },
+        {
+          "heading": "Diagrams Referenced",
+          "content": "- Contingency table (binary confusion matrix)\n- Precision/Recall graph (trade-off curve)\n- ROC curve (TPR vs. FPR)\n- Silhouette plot (visual quality of clustering)\n- Learning curves from ablation tests (performance vs. training set size)"
+        },
+        {
+          "heading": "Learning Objectives",
+          "content": "- Understand why evaluation is critical and what assumptions underlie it.\n- Master binary and multi-class classification metrics (accuracy, precision, recall, F1/Fβ, MCC, ROC/AUC).\n- Select appropriate regression evaluation measures (RMSE, MAE, R²).\n- Design and interpret baselines (lower bound, SotA, human, upper bound).\n- Evaluate clustering solutions via external measures (purity, Rand Index, V-Measure) and internal measures (Silhouette, edge correlation).\n- Apply correct dataset handling strategies (splitting, stratification, cross-validation) to avoid overestimation.\n- Set up and interpret A/B tests for live-system evaluation.\n- Conduct ablation tests and error analysis to understand model behaviour and guide improvements."
+        }
+      ]
+    },
+    "medium": {
+      "available": false,
+      "sections": []
+    },
+    "full": {
+      "available": false,
+      "sections": []
+    }
+  }
+}

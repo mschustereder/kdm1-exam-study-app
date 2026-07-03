@@ -1,0 +1,52 @@
+{
+  "id": 6,
+  "title": "Feature Engineering",
+  "icon": "🔧",
+  "depths": {
+    "concise": {
+      "available": true,
+      "sections": [
+        {
+          "heading": "Core Definitions & Concepts",
+          "content": "- **Feature Engineering**: The act of injecting domain knowledge into a machine learning model by transforming raw data into a suitable representation.\n- **Feature Set**: The collection of features used for a given task.\n- **Feature Space**: The high-dimensional space spanned by the features and their value ranges.\n- **Instance**: A single example (assignment of feature values).\n- **Machine Learning Model**: The output of the learning process — a knowledge representation.\n- **Data Processing Pipeline** (Markov chain X -> Y -> Z): Joint probability factors as P(X,Y,Z) = P(Z|Y) P(Y|X) P(X); past and future are conditionally independent given the present. Information can only be lost along the pipeline (Data Processing Inequality).\n- **Structural Dependencies**: Between independent/dependent variables (required for prediction), between independent variables (redundancy / multicollinearity), and between instances (violates i.i.d. assumption).\n- **Goals of Feature Engineering**: (1) Best prediction accuracy, or (2) an explainable model.\n- **Process**: Remove unnecessary/redundant features, create new features (combine, transform, contextual, external), modify feature types, modify feature values."
+        },
+        {
+          "heading": "Information Theory",
+          "content": "- **Kolmogorov Complexity**: Size of the smallest program that can produce the data — not computable, but a theoretical lower bound for compression.\n- **Minimum Description Length (MDL)**: Among competing models, prefer the one that compresses the data best (ties to Occam's razor).\n- **Entropy H(X)**: Measure of uncertainty in a discrete random variable; H(X) = -sum p(x) log2 p(x). High entropy = uniform distribution (hard to predict); low entropy = peaked distribution (easier to predict). Always non-negative; upper bound is log|X|.\n- **Joint Entropy H(X,Y)**: Uncertainty of a pair of variables; H(X,Y) = H(X) + H(Y) if X and Y are independent.\n- **Conditional Entropy H(Y|X)**: Remaining uncertainty in Y once X is known; H(Y|X) = H(X,Y) - H(X).\n- **Information Gain IG(Y|X) = H(Y) - H(Y|X)**: Reduction in uncertainty of Y given X. Relative IG = IG(Y|X) / H(Y).\n- **Mutual Information I(X;Y)**: How much information one variable contains about another; I(X;Y) = 0 iff X and Y are independent. Analogous to a generalised correlation measure.\n- **Pointwise Mutual Information (PMI)**: pmi(x;y) = log2[p(x,y) / (p(x)p(y))]; can be normalised.\n- **Kullback-Leibler Divergence D(p||q)**: Relative entropy between two probability distributions; always non-negative, zero iff p = q. I(X;Y) = D(p(x,y) || p(x)p(y))."
+        },
+        {
+          "heading": "Distance Functions",
+          "content": "- **Purpose**: Many data mining algorithms rely on distance to estimate similarity and find nearest neighbours.\n- **Numeric Distances**:\n  - **Euclidean** (L2): sqrt(sum (xi - yi)^2) — default, but suffers from curse of dimensionality.\n  - **Manhattan** (L1): sum |xi - yi| — city-block distance.\n  - **Chebyshev** (Linf): max_i |xi - yi| — chessboard distance.\n  - **Minkowski**: Generalisation with parameter p (p=1: Manhattan, p=2: Euclidean, p=inf: Chebyshev).\n  - **Mahalanobis**: sqrt((x-y)^T Sigma^{-1} (x-y)) — accounts for covariance structure (whitening).\n  - **Cosine Similarity**: (x . y) / (||x|| ||y||) — angle-based, better for high-dimensional data; converted to distance as 1 - sim_cosine.\n- **Categorical Distances**:\n  - **Jaccard Index**: |A n B| / |A u B| — ratio of intersection to union.\n  - **Hamming Distance**: Count of differing positions in two equal-length lists/strings.\n- **String Distances**:\n  - **Levenshtein Distance**: Minimum number of character insertions, deletions, and (optionally) substitutions to transform one string into another.\n- **Practical Considerations**: Euclidean is default but less suited for high dimensions; Cosine similarity excels there; normalisation/standardisation impacts all distance-based methods; correlations among features can skew distances."
+        },
+        {
+          "heading": "Feature Value Processing (Univariate)",
+          "content": "- **Binarisation**: Threshold numeric values to boolean.\n- **Discretisation**: Convert continuous to discrete (equal-size partitions or equal-interval partitions).\n- **Transformation**: Scaling values and shifting the centre.\n- **Normalisation**: Min-max scaling to [0,1]; prevents features with large ranges from dominating distance functions.\n- **Standardisation**: Centre at mean, scale to units of standard deviation.\n- **Feature Weighting**: Encode feature importance into the value (e.g., term weighting in text)."
+        },
+        {
+          "heading": "Feature Engineering for Text Mining",
+          "content": "- **N-grams**: Bigrams (word pairs), trigrams, general n-grams to capture sequence information lost with unigrams.\n- **Skip N-grams**: Allow gaps between words.\n- **Character N-grams**: Operate at character level (e.g., character trigrams).\n- **External Sources**: Enrich features with external knowledge bases (e.g., WordNet hypernyms: adding \"canine\", \"canid\" for the word \"fox\")."
+        },
+        {
+          "heading": "Feature Selection",
+          "content": "- **Motivation**: Remove unnecessary/redundant features; combat curse of dimensionality; improve interpretability, generalisation (less overfitting), and efficiency.\n- **Feature selection** is NP-hard (set-of-all-subsets); practical approaches are needed.\n- **Heuristic Approaches**: Black/white lists; e.g., stop-word lists for text.\n- **Unsupervised Ranked Selection**: Score features (e.g., term frequency in a reference corpus) and keep top k%.\n- **Supervised Approaches**:\n  - **Filter**: Compute a discriminative measure (e.g., Information Gain) per feature, rank, select top-k. Fast but ignores redundancy and feature interactions.\n  - **Wrapper**: Search the space of feature subsets, evaluate each with a learner (forward selection: start empty, add best; backward elimination: start full, remove worst). Computationally intensive but accounts for feature combinations.\n- **Further Methods**: Correlation-based removal, PCA, Interaction Information (from information theory for non-trivial variable relationships).\n- **Alternative to selection**: Regularisation (e.g., L1/L2) as a built-in complexity reduction within the model."
+        },
+        {
+          "heading": "Important Diagrams Referenced",
+          "content": "- Entropy/Information diagram showing relationships among H(X), H(Y), H(X,Y), H(X|Y), H(Y|X), and I(X;Y).\n- WordNet hierarchy for \"fox\" showing hypernyms (e.g., canine, canid, carnivore, mammal).\n- Example frequency table for Wikipedia terms (top word \"the\" occurs in 88% of instances)."
+        },
+        {
+          "heading": "Learning Objectives",
+          "content": "- Understand how to measure information content (entropy, mutual information, KL divergence).\n- Select and apply appropriate distance functions for numeric, categorical, and string data.\n- Apply the data processing inequality to reason about information loss in pipelines.\n- Transform and normalise features to meet algorithm assumptions.\n- Engineer textual features via n-grams and external knowledge integration.\n- Perform feature selection using heuristics, filter methods (e.g., Information Gain), and wrapper methods (forward selection / backward elimination).\n- Balance model complexity against predictive power (MDL principle)."
+        }
+      ]
+    },
+    "medium": {
+      "available": false,
+      "sections": []
+    },
+    "full": {
+      "available": false,
+      "sections": []
+    }
+  }
+}
